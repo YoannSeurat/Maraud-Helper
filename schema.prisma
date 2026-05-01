@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  mail      String   @unique
+  isAdmin   Boolean
+  password  String
+  picture   String?
+
+  itemTasks ItemTaskUser[]
+  marauds   MaraudInscription[]
+}
+
+model Maraud {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  date        DateTime
+  thumbnail   String?
+  isFinished  Boolean
+  location    String
+
+  inscriptions MaraudInscription[]
+}
+
+model MaraudGroup {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  startTime   DateTime
+  endTime     DateTime
+}
+
+model MaraudInscription {
+  id        Int @id @default(autoincrement())
+  userId    Int
+  maraudId  Int
+
+  user   User   @relation(fields: [userId], references: [id])
+  maraud Maraud @relation(fields: [maraudId], references: [id])
+
+  @@unique([userId, maraudId])
+}
+
+model ItemTask {
+  id            Int      @id @default(autoincrement())
+  name          String
+  currentCount  Int
+  max           Int
+
+  users ItemTaskUser[]
+}
+
+model ItemTaskUser {
+  id         Int @id @default(autoincrement())
+  itemTaskId Int
+  userId     Int
+
+  itemTask ItemTask @relation(fields: [itemTaskId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+
+  @@unique([itemTaskId, userId])
+}
+
+model Path {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  points PathPoint[]
+}
+
+model PathPoint {
+  id     Int   @id @default(autoincrement())
+  pathId Int
+  lat    Float
+  long   Float
+
+  path Path @relation(fields: [pathId], references: [id])
+}
