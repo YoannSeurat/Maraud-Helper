@@ -1,18 +1,20 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  mail      String   @unique
-  isAdmin   Boolean
-  password  String
-  picture   String?
+  id       Int     @id @default(autoincrement())
+  name     String
+  mail     String  @unique
+  isAdmin  Boolean
+  password String
+  picture  String?
+  token    String? @unique
 
   itemTasks ItemTaskUser[]
   marauds   MaraudInscription[]
@@ -39,9 +41,9 @@ model MaraudGroup {
 }
 
 model MaraudInscription {
-  id        Int @id @default(autoincrement())
-  userId    Int
-  maraudId  Int
+  id       Int @id @default(autoincrement())
+  userId   Int
+  maraudId Int
 
   user   User   @relation(fields: [userId], references: [id])
   maraud Maraud @relation(fields: [maraudId], references: [id])
@@ -50,10 +52,10 @@ model MaraudInscription {
 }
 
 model ItemTask {
-  id            Int      @id @default(autoincrement())
-  name          String
-  currentCount  Int
-  max           Int
+  id           Int    @id @default(autoincrement())
+  name         String
+  currentCount Int
+  max          Int
 
   users ItemTaskUser[]
 }
