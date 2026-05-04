@@ -16,20 +16,93 @@ model User {
   picture  String?
   token    String? @unique
 
-  itemTasks ItemTaskUser[]
-  marauds   MaraudInscription[]
+  createdMarauds    Maraud[]            @relation("MaraudAuthor")
+  marauds           MaraudInscription[]
+  itemTasks         ItemTaskUser[]
+  taskContributions MaraudTaskUser[]
 }
 
 model Maraud {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  date        DateTime
-  thumbnail   String?
-  isFinished  Boolean
-  location    String
+  id             Int      @id @default(autoincrement())
+  name           String
+  description    String
+  date           DateTime
+  endDate        DateTime
+  thumbnail      String?
+  isFinished     Boolean
+  isVisible      Boolean  @default(true)
+  stocksDeducted Boolean  @default(false)
+  location       String
+
+  authorId Int
+  author   User @relation("MaraudAuthor", fields: [authorId], references: [id])
 
   inscriptions MaraudInscription[]
+  stops        MaraudStop[]
+  tasks        MaraudTask[]
+}
+
+model MaraudStop {
+  id       Int       @id @default(autoincrement())
+  maraudId Int
+  order    Int
+  address  String
+  city     String?
+  time     DateTime?
+  lat      Float?
+  long     Float?
+
+  maraud Maraud @relation(fields: [maraudId], references: [id], onDelete: Cascade)
+
+  @@unique([maraudId, order])
+}
+
+model MaraudTask {
+  id          Int       @id @default(autoincrement())
+  maraudId    Int
+  name        String
+  description String?
+  startTime   DateTime
+  endTime     DateTime?
+  order       Int       @default(0)
+
+  maraud       Maraud            @relation(fields: [maraudId], references: [id], onDelete: Cascade)
+  contributors MaraudTaskUser[]
+  stockUsages  MaraudTaskStock[]
+}
+
+model MaraudTaskUser {
+  id           Int @id @default(autoincrement())
+  maraudTaskId Int
+  userId       Int
+
+  task MaraudTask @relation(fields: [maraudTaskId], references: [id], onDelete: Cascade)
+  user User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([maraudTaskId, userId])
+}
+
+model StockItem {
+  id           Int     @id @default(autoincrement())
+  name         String
+  category     String
+  currentCount Int
+  unit         String?
+
+  taskUsages MaraudTaskStock[]
+}
+
+model MaraudTaskStock {
+  id             Int @id @default(autoincrement())
+  maraudTaskId   Int
+  stockItemId    Int
+  quantity       Int
+  completedCount Int @default(0)
+
+  task      MaraudTask @relation(fields: [maraudTaskId], references: [id], onDelete: Cascade)
+  stockItem StockItem  @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
+
+  @@unique([maraudTaskId, stockItemId])
 }
 
 model MaraudGroup {
@@ -46,7 +119,7 @@ model MaraudInscription {
   maraudId Int
 
   user   User   @relation(fields: [userId], references: [id])
-  maraud Maraud @relation(fields: [maraudId], references: [id])
+  maraud Maraud @relation(fields: [maraudId], references: [id], onDelete: Cascade)
 
   @@unique([userId, maraudId])
 }

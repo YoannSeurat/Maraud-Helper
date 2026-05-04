@@ -57,7 +57,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-light px-5">
-      <div className="bg-black rounded-2xl shadow-lg p-10 w-full max-w-md border border-bg-3">
+      <div className="bg-bg-2 rounded-2xl shadow-lg p-10 w-fit border border-bg-3">
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-text-main mb-2">Inscription</h1>
@@ -75,40 +75,43 @@ export default function RegisterPage() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-6">
-          {/* Name Field */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="name" className="text-text-main text-sm font-semibold tracking-wide">
-              Nom complet
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Entrez votre nom"
-              required
-              disabled={loading}
-              className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
-            />
-          </div>
 
-          {/* Username Field */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="username" className="text-text-main text-sm font-semibold tracking-wide">
-              Identifiant
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              placeholder="Choisissez un identifiant"
-              required
-              disabled={loading}
-              className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
-            />
+          <div className={"flex flex-row gap-4"}>
+            {/* Name Field */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="name" className="text-text-main text-sm font-semibold tracking-wide">
+                Nom complet
+              </label>
+              <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Entrez votre nom"
+                  required
+                  disabled={loading}
+                  className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
+              />
+            </div>
+
+            {/* Username Field */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="username" className="text-text-main text-sm font-semibold tracking-wide">
+                Identifiant
+              </label>
+              <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  placeholder="Choisissez un identifiant"
+                  required
+                  disabled={loading}
+                  className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
+              />
+            </div>
           </div>
 
           {/* Email Field */}
@@ -117,52 +120,54 @@ export default function RegisterPage() {
               Email
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Entrez votre email"
-              required
-              disabled={loading}
-              className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Entrez votre email"
+                required
+                disabled={loading}
+                className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
             />
           </div>
 
-          {/* Password Field */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="password" className="text-text-main text-sm font-semibold tracking-wide">
-              Mot de passe
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Minimum 6 caractères"
-              required
-              disabled={loading}
-              className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
-            />
-          </div>
+          <div className={"flex flex-row gap-4 mb-6"}>
+            {/* Password Field */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password" className="text-text-main text-sm font-semibold tracking-wide">
+                Mot de passe
+              </label>
+              <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Minimum 6 caractères"
+                  required
+                  disabled={loading}
+                  className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
+              />
+            </div>
 
-          {/* Confirm Password Field */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="confirmPassword" className="text-text-main text-sm font-semibold tracking-wide">
-              Confirmer le mot de passe
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirmez votre mot de passe"
-              required
-              disabled={loading}
-              className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
-            />
+            {/* Confirm Password Field */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="confirmPassword" className="text-text-main text-sm font-semibold tracking-wide">
+                Confirmer le mot de passe
+              </label>
+              <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirmez votre mot de passe"
+                  required
+                  disabled={loading}
+                  className="px-3.5 py-3 border-2 border-bg-3 rounded-lg text-sm text-text-main bg-bg transition-all duration-300 placeholder-text-secondary disabled:bg-bg-2 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:border-main-500 focus:bg-black focus:shadow-[0_0_0_3px_rgba(249,58,89,0.1)]"
+              />
+            </div>
           </div>
 
           {/* Submit Button */}

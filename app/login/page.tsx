@@ -44,7 +44,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-light px-5">
-      <div className="bg-black rounded-2xl shadow-lg p-10 w-full max-w-md border border-bg-3">
+      <div className="bg-bg-2 rounded-2xl shadow-lg p-10 w-full max-w-md">
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-text-main mb-2">Connexion</h1>

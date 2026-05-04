@@ -1,4 +1,109 @@
 @import "tailwindcss";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+@theme {
+  /* Backgrounds */
+  --color-bg: #211212;
+  --color-bg-2: #321B1B;
+  --color-bg-3: #4C2929;
+  --color-bg-4: #633636;
+  --color-bg-5: #743E3E;
+
+  /* Texts */
+  --color-text-main: #E4E3E8;
+  --color-text-secondary: #B2AFBC;
+
+  /* Main Color (Rouge/Rose) */
+  --color-main-50: #4E0317;
+  --color-main-100: #8B1034;
+  --color-main-200: #A30E35;
+  --color-main-300: #C30D37;
+  --color-main-400: #E71742;
+  --color-main-500: #F93A59; /* Note: Dans ton JSON 500 = #F93A59 */
+  --color-main-600: #FF5168;
+  --color-main-700: #FFA1AC;
+  --color-main-800: #FFCCD1;
+  --color-main-900: #FFE3E5;
+  --color-main-950: #FFF1F2;
+
+  /* Secondary Color (Rouge) */
+  --color-secondary-50: #460909;
+  --color-secondary-100: #811B1B;
+  --color-secondary-200: #9B1919;
+  --color-secondary-300: #BC1919;
+  --color-secondary-400: #DF2323;
+  --color-secondary-500: #F24040;
+  --color-secondary-600: #FA6F6F;
+  --color-secondary-700: #FEA3A3;
+  --color-secondary-800: #FFC9C9;
+  --color-secondary-900: #FFE1E1;
+  --color-secondary-950: #FEF2F2;
+
+  /* Accent & Basic Colors */
+  --color-violet-50: #F3F2FF;
+  --color-violet-100: #E9E7FF;
+  --color-violet-200: #D6D3FF;
+  --color-violet-300: #B8AFFF;
+  --color-violet-400: #9482FF;
+  --color-violet-500: #724FFF;
+  --color-violet-600: #6F3EFC;
+  --color-violet-700: #5319E8;
+  --color-violet-800: #4515C2;
+  --color-violet-900: #3A139F;
+  --color-violet-950: #21096C;
+
+  --color-green-50: #F2FBEA;
+  --color-green-100: #E0F7D0;
+  --color-green-200: #C4EFA7;
+  --color-green-300: #9EE274;
+  --color-green-400: #7BD249;
+  --color-green-500: #5BB72A;
+  --color-green-600: #44921E;
+  --color-green-700: #35701B;
+  --color-green-800: #2E591B;
+  --color-green-900: #284C1B;
+  --color-green-950: #12290A;
+
+  --color-blue-50: #EDF7FF;
+  --color-blue-100: #D7ECFF;
+  --color-blue-200: #B9DFFF;
+  --color-blue-300: #88CCFF;
+  --color-blue-400: #50AFFF;
+  --color-blue-500: #288CFF;
+  --color-blue-600: #0A68FF;
+  --color-blue-700: #0A55EB;
+  --color-blue-800: #0F44BE;
+  --color-blue-900: #133E95;
+  --color-blue-950: #11275A;
+
+  --color-orange-50: #FEF8EE;
+  --color-orange-100: #FCF0D8;
+  --color-orange-200: #F7DCB1;
+  --color-orange-300: #F2C37F;
+  --color-orange-400: #EC9F4B;
+  --color-orange-500: #E88930;
+  --color-orange-600: #D86C1E;
+  --color-orange-700: #B4521A;
+  --color-orange-800: #8F411D;
+  --color-orange-900: #74381A;
+  --color-orange-950: #3E1B0C;
+
+  --color-pink-50: #FFF4FE;
+  --color-pink-100: #FFE8FE;
+  --color-pink-200: #FDD1FB;
+  --color-pink-300: #F77BE8;
+  --color-pink-400: #F77BE8;
+  --color-pink-500: #EC4BD7;
+  --color-pink-600: #D029B7;
+  --color-pink-700: #AC1F93;
+  --color-pink-800: #8D1B78;
+  --color-pink-900: #731C61;
+  --color-pink-950: #4D053E;
+
+  /* Custom Utilities */
+  --background-image-gradient-main: linear-gradient(135deg, #F93A59 0%, #E71742 100%);
+}
+
 
 :root {
   --bg-base: #1a0508;
@@ -34,6 +139,56 @@ body {
   color: var(--text-main);
   font-family: var(--font-sans), "Segoe UI", sans-serif;
 }
+
+.dark-horizontal-scrollbar::-webkit-scrollbar {
+  height: 9px;
+}
+
+.dark-horizontal-scrollbar::-webkit-scrollbar-track {
+  background: #211212;
+  border-radius: 999px;
+}
+
+.dark-horizontal-scrollbar::-webkit-scrollbar-thumb {
+  background: #4C2929;
+  border-radius: 999px;
+}
+
+.dark-horizontal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #633636;
+}
+
+.dark-horizontal-scrollbar {
+  scrollbar-color: #4C2929 #211212;
+  scrollbar-width: thin;
+}
+
+.dark-vertical-scrollbar::-webkit-scrollbar {
+  width: 9px;
+}
+
+.dark-vertical-scrollbar::-webkit-scrollbar-track {
+  background: #211212;
+  border-radius: 999px;
+}
+
+.dark-vertical-scrollbar::-webkit-scrollbar-thumb {
+  background: #4C2929;
+  border-radius: 999px;
+}
+
+.dark-vertical-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #633636;
+}
+
+.dark-vertical-scrollbar {
+  scrollbar-color: #4C2929 #211212;
+  scrollbar-width: thin;
+}
+
+
+
+
 
 .landing-shell {
   position: relative;
@@ -170,22 +325,6 @@ body {
   color: var(--accent);
   font-size: 1.04rem;
   font-weight: 700;
-}
-
-h1 {
-  margin: 0;
-  font-size: clamp(2rem, 4.1vw, 3rem);
-  font-weight: 680;
-}
-
-h2 {
-  margin: 54px 0 20px;
-  font-size: clamp(2rem, 3.6vw, 3.1rem);
-}
-
-h3 {
-  margin: 0 0 12px;
-  font-size: 1.9rem;
 }
 
 .board-grid {
@@ -486,19 +625,6 @@ h3 {
     justify-content: flex-start;
   }
 
-  h1 {
-    font-size: 2.2rem;
-  }
-
-  h2 {
-    font-size: 2rem;
-    margin-top: 36px;
-  }
-
-  h3 {
-    font-size: 1.4rem;
-  }
-
   .dual-cards {
     grid-template-columns: 1fr;
   }
@@ -509,3 +635,5 @@ h3 {
     min-height: 40px;
   }
 }
+
+
