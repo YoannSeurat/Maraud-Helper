@@ -12,11 +12,10 @@ const publicRoutes = [
   "/api/auth/register",
 ];
 
-const alwaysAllowedApiRoutes = [
+const mobileAllowedApiRoutes = [
+  "/api/mobile",
   "/api/me",
   "/api/auth/logout",
-  "/api/mobile",
-  "/api/maraudes",
 ];
 
 const assetPrefixes = [
@@ -24,6 +23,7 @@ const assetPrefixes = [
   "/favicon.ico",
   "/robots.txt",
   "/sitemap.xml",
+  "/socket.io",
 ];
 
 function isMobileRequest(request: NextRequest) {
@@ -38,59 +38,96 @@ function isAdminFromPayload(value: unknown) {
   return value === true || value === "true" || value === 1 || value === "1";
 }
 
+function isPublicRoute(pathname: string) {
+  return publicRoutes.some((route) => pathname.startsWith(route));
+}
+
+function isAssetRoute(pathname: string) {
+  return assetPrefixes.some((prefix) => pathname.startsWith(prefix));
+}
+
+function isMobileAllowedApi(pathname: string) {
+  return mobileAllowedApiRoutes.some((route) => pathname.startsWith(route));
+}
+
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  const isApiRoute = pathname.startsWith("/api");
+  const isMobile = isMobileRequest(request);
 
-  if (
-      publicRoutes.some((route) => pathname.startsWith(route)) ||
-      assetPrefixes.some((prefix) => pathname.startsWith(prefix))
-  ) {
+  if (isPublicRoute(pathname) || isAssetRoute(pathname)) {
     return NextResponse.next();
   }
 
   const token = request.cookies.get("authToken")?.value;
 
   if (!token) {
-    if (!pathname.startsWith("/api")) {
-      return NextResponse.redirect(new URL("/login", request.url));
+    if (isApiRoute) {
+      return NextResponse.json(
+          { error: "Authentification requise." },
+          { status: 401 }
+      );
     }
 
-    return NextResponse.json(
-        { error: "Authentification requise" },
-        { status: 401 }
-    );
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   try {
     const { payload } = await jwtVerify(token, secret);
-
     const isAdmin = isAdminFromPayload(payload.isAdmin);
-    const isMobile = isMobileRequest(request);
 
-    const isAlwaysAllowedApi = alwaysAllowedApiRoutes.some((route) =>
-        pathname.startsWith(route)
-    );
-
-    if (isMobile && !pathname.startsWith("/mobile") && !pathname.startsWith("/api")) {
-      return NextResponse.redirect(new URL("/mobile", request.url));
-    }
-
-    if (!isAdmin && !isMobile) {
-      if (pathname.startsWith("/api")) {
-        if (isAlwaysAllowedApi) {
+    /**
+     * MOBILE
+     * Tous les utilisateurs connectés, admin ou membre, doivent aller vers l'interface mobile.
+     * On bloque les API de gestion desktop sur mobile.
+     */
+    if (isMobile) {
+      if (isApiRoute) {
+        if (isMobileAllowedApi(pathname)) {
           return NextResponse.next();
         }
 
         return NextResponse.json(
-            { error: "Accès administrateur requis sur ordinateur." },
+            { error: "Cette route API est réservée à l'interface de gestion desktop." },
             { status: 403 }
         );
       }
 
-      return NextResponse.redirect(new URL("/mobile-only", request.url));
+      if (!pathname.startsWith("/mobile")) {
+        return NextResponse.redirect(new URL("/mobile", request.url));
+      }
+
+      return NextResponse.next();
     }
 
-    if (isAdmin && pathname === "/mobile-only") {
+    /**
+     * DESKTOP
+     * Toutes les routes de gestion desktop et toutes les API de gestion sont réservées aux admins.
+     */
+    if (!isAdmin) {
+      if (isApiRoute) {
+        return NextResponse.json(
+            { error: "Accès administrateur requis." },
+            { status: 403 }
+        );
+      }
+
+      if (pathname !== "/mobile-only") {
+        return NextResponse.redirect(new URL("/mobile-only", request.url));
+      }
+
+      return NextResponse.next();
+    }
+
+    /**
+     * ADMIN DESKTOP
+     * Accès complet au site de gestion et aux APIs.
+     */
+    if (pathname.startsWith("/mobile")) {
+      return NextResponse.redirect(new URL("/tableau-de-bord", request.url));
+    }
+
+    if (pathname === "/mobile-only") {
       return NextResponse.redirect(new URL("/tableau-de-bord", request.url));
     }
 
@@ -98,11 +135,14 @@ export async function middleware(request: NextRequest) {
   } catch (error) {
     console.error("Token invalide:", error);
 
-    if (!pathname.startsWith("/api")) {
-      return NextResponse.redirect(new URL("/login", request.url));
+    if (isApiRoute) {
+      return NextResponse.json(
+          { error: "Token invalide." },
+          { status: 401 }
+      );
     }
 
-    return NextResponse.json({ error: "Token invalide" }, { status: 401 });
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 }
 

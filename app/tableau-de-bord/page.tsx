@@ -527,7 +527,8 @@ export default function TableauDeBordPage() {
                             return (
                                 <div
                                     key={member.id}
-                                    className="grid grid-cols-[1.5fr_1.7fr_0.8fr_0.8fr_0.8fr_1fr] items-center gap-4 rounded-md bg-bg-3 px-5 py-4"
+                                    onClick={() => router.push(`/membres/${member.id}`)}
+                                    className="grid cursor-pointer grid-cols-[1.5fr_1.7fr_0.8fr_0.8fr_0.8fr_1fr] items-center gap-4 rounded-md bg-bg-3 px-5 py-4 transition-colors hover:bg-bg-4"
                                 >
                                   <div className="flex items-center gap-3">
                                     <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-bg-4 text-sm font-bold text-text-main">
@@ -545,20 +546,14 @@ export default function TableauDeBordPage() {
                                       )}
                                     </div>
 
-                                    <p className="text-sm font-bold text-text-main">
-                                      {member.name}
-                                    </p>
+                                    <p className="text-sm font-bold text-text-main">{member.name}</p>
                                   </div>
 
-                                  <p className="truncate text-sm text-text-secondary">
-                                    {member.mail}
-                                  </p>
+                                  <p className="truncate text-sm text-text-secondary">{member.mail}</p>
 
                                   <p
                                       className={`text-sm font-semibold ${
-                                          member.isAdmin
-                                              ? "text-main-500"
-                                              : "text-text-main"
+                                          member.isAdmin ? "text-main-500" : "text-text-main"
                                       }`}
                                   >
                                     {member.isAdmin ? "Admin" : "Membre"}
@@ -572,16 +567,17 @@ export default function TableauDeBordPage() {
                                     {member.createdMaraudsCount}
                                   </p>
 
-                                  <div className="flex items-center justify-end gap-2">
+                                  <div
+                                      className="flex items-center justify-end gap-2"
+                                      onClick={(event) => event.stopPropagation()}
+                                  >
                                     <button
                                         type="button"
                                         disabled={isMutatingMember}
                                         onClick={() => handleToggleRole(member)}
                                         className={`${BUTTON_ANIMATION} rounded-md bg-bg-4 px-3 py-2 text-xs font-semibold text-text-main hover:bg-bg-5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100`}
                                     >
-                                      {member.isAdmin
-                                          ? "Passer membre"
-                                          : "Passer admin"}
+                                      {member.isAdmin ? "Passer membre" : "Passer admin"}
                                     </button>
 
                                     <button
