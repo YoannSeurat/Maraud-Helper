@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Maraud-Helper
+
+Maraud-Helper is a web application built with [Next.js](https://nextjs.org). Its primary purpose is to assist in marauding activities — whether for strategic planning, coordination, or tracking within your community or project. The app is built primarily with TypeScript, leverages modern libraries, and is ready for development and deployment on Vercel or other platforms.
+
+---
+
+## Features
+
+- Modern, fast web app using Next.js and TypeScript
+- Optimized font loading with [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
+- Easy local development with HMR (Hot Module Replacement)
+- Modern CSS and minimal JavaScript overhead
+- Ready-to-deploy configuration
+
+---
 
 ## Getting Started
 
-First, run the development server:
+To get a local copy up and running, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Make sure you have [Node.js](https://nodejs.org/) and npm (or yarn/pnpm/bun) installed.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/YoannSeurat/Maraud-Helper.git
+    cd Maraud-Helper
+    ```
+
+2. Install dependencies:
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    # or
+    bun install
+    ```
+
+3. Run the development server:
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
+    ```
+
+Visit [http://localhost:3000](http://localhost:3000) to see the app.
+
+---
+
+## Available Scripts
+
+- `dev` – Runs the app in development mode
+- `build` – Builds the app for production
+- `start` – Starts the production server
+- `lint` – Runs ESLint to analyze/project code
+
+---
+
+## Project Structure
+
+- `/app` — Main Next.js application code (pages, components, routing)
+- `/public` — Static files
+- `/styles` — CSS files
+
+The main page can be found in `app/page.tsx`.
+
+---
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Learn Next.js](https://nextjs.org/learn)
+- [Vercel Platform](https://vercel.com/new)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributors
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Made by Taonix (Aubin), Yoann Seurat, Sidney, Merouane, and Yannis
